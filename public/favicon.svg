@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Outer Red Ring -->
+  <circle cx="250" cy="250" r="242" fill="#080808" stroke="#E30613" stroke-width="16" />
+
+  <!-- Inner Black Disk -->
+  <circle cx="250" cy="250" r="232" fill="#080808" />
+
+  <!-- Center White Bold Letter 'A' -->
+  <path d="M250 60 L385 320 L305 320 L278 260 L222 260 L195 320 L115 320 Z M250 148 L233 216 L267 216 Z" fill="#FFFFFF" />
+
+  <!-- Red Brushstroke 'X' -->
+  <path d="M130 135 C 175 168, 225 208, 280 238 C 320 258, 360 274, 385 282 C 388 274, 375 264, 345 248 C 290 220, 230 182, 178 142 C 152 122, 138 126, 130 135 Z" fill="#E30613" />
+  <path d="M120 152 C 160 185, 215 220, 268 242 C 315 262, 355 278, 378 288 C 368 296, 345 284, 305 262 C 255 235, 195 198, 135 160 Z" fill="#E30613" opacity="0.95" />
+  <path d="M370 135 C 330 168, 280 210, 222 242 C 180 264, 138 280, 115 286 C 112 278, 128 266, 158 250 C 212 220, 272 180, 322 140 C 348 120, 362 126, 370 135 Z" fill="#E30613" />
+  <path d="M380 152 C 340 185, 285 220, 232 242 C 185 262, 145 278, 122 288 C 132 296, 155 284, 195 262 C 245 235, 305 198, 365 160 Z" fill="#E30613" opacity="0.95" />
+
+  <!-- Typography -->
+  <text x="250" y="385" text-anchor="middle" font-family="'Archivo Black', 'Impact', sans-serif" font-size="82" font-weight="900" fill="#FFFFFF" letter-spacing="-3">ANYONE</text>
+  <text x="250" y="450" text-anchor="middle" font-family="'Archivo Black', 'Impact', sans-serif" font-size="68" font-weight="900" letter-spacing="-1">
+    <tspan fill="#FFFFFF">BUT </tspan>
+    <tspan fill="#E30613">APC</tspan>
+  </text>
+</svg>
