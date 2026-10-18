@@ -4,18 +4,10 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { ManifestoPage } from './pages/ManifestoPage';
-import { ActionHubPage } from './pages/ActionHubPage';
-import { AboutPage } from './pages/AboutPage';
-import { IssuesPage } from './pages/IssuesPage';
 import { DemocracyPage } from './pages/DemocracyPage';
-import { EvidencePage } from './pages/EvidencePage';
-import { WritePage } from './pages/WritePage';
-import { UpdatesPage } from './pages/UpdatesPage';
-import { PartyContactPage } from './pages/PartyContactPage';
-import { ContactPage } from './pages/ContactPage';
+import { ActionHubPage } from './pages/ActionHubPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { EditorialPolicyPage } from './pages/EditorialPolicyPage';
-import { LaunchChecklistPage } from './pages/LaunchChecklistPage';
 import { ArrowUp } from 'lucide-react';
 
 export default function App() {
@@ -24,26 +16,13 @@ export default function App() {
     const validPages: PageId[] = [
       'home',
       'manifesto',
-      'action',
-      'about',
-      'issues',
       'democracy',
-      'evidence',
-      'write',
-      'updates',
-      'party-contact',
-      'contact',
+      'action',
       'privacy',
-      'editorial',
-      'checklist'
+      'editorial'
     ];
     return validPages.includes(hash) ? hash : 'home';
   });
-
-  useEffect(() => {
-    document.getElementById('main-content')?.focus({ preventScroll: true });
-    window.scrollTo({top: 0, behavior: 'instant'});
-  }, [currentPage]);
 
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -53,18 +32,10 @@ export default function App() {
       const validPages: PageId[] = [
         'home',
         'manifesto',
-        'action',
-        'about',
-        'issues',
         'democracy',
-        'evidence',
-        'write',
-        'updates',
-        'party-contact',
-        'contact',
+        'action',
         'privacy',
-        'editorial',
-        'checklist'
+        'editorial'
       ];
       if (validPages.includes(hash)) {
         setCurrentPage(hash);
@@ -99,37 +70,21 @@ export default function App() {
         return <HomePage onNavigate={handleNavigate} />;
       case 'manifesto':
         return <ManifestoPage onNavigate={handleNavigate} />;
-      case 'action':
-        return <ActionHubPage onNavigate={handleNavigate} />;
-      case 'about':
-        return <AboutPage onNavigate={handleNavigate} />;
-      case 'issues':
-        return <IssuesPage onNavigate={handleNavigate} />;
       case 'democracy':
         return <DemocracyPage onNavigate={handleNavigate} />;
-      case 'evidence':
-        return <EvidencePage onNavigate={handleNavigate} />;
-      case 'write':
-        return <WritePage onNavigate={handleNavigate} />;
-      case 'updates':
-        return <UpdatesPage onNavigate={handleNavigate} />;
-      case 'party-contact':
-        return <PartyContactPage onNavigate={handleNavigate} />;
-      case 'contact':
-        return <ContactPage onNavigate={handleNavigate} />;
+      case 'action':
+        return <ActionHubPage onNavigate={handleNavigate} />;
       case 'privacy':
         return <PrivacyPolicyPage onNavigate={handleNavigate} />;
       case 'editorial':
         return <EditorialPolicyPage onNavigate={handleNavigate} />;
-      case 'checklist':
-        return <LaunchChecklistPage onNavigate={handleNavigate} />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#080808]">
+    <div className="min-h-screen flex flex-col bg-white text-[#080808] selection:bg-[#E30613] selection:text-white">
       <Header currentPage={currentPage} onNavigate={handleNavigate} />
 
       <main id="main-content" className="flex-1" tabIndex={-1}>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrandLogo } from './BrandLogo';
 import { PageId } from '../types';
-import { SITE_METADATA } from '../data/content';
-import { Shield, Lock, FileCheck, Download, ArrowUpRight } from 'lucide-react';
+import { SITE_METADATA, SOCIAL_CHANNELS, ABOUT_DECLARATION } from '../data/content';
+import { Shield, Lock, Download, ExternalLink, Mail, Share2 } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (page: PageId) => void;
@@ -12,211 +12,130 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="bg-[#080808] text-white pt-16 pb-12 border-t-4 border-[#E30613]" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-neutral-800">
-          {/* Brand & Manifesto Column */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <BrandLogo variant="circle-badge" size="md" />
-              <div>
-                <span className="font-display text-xl uppercase font-black tracking-tight text-white block">
-                  ANYONE BUT APC
-                </span>
-                <span className="text-[10px] text-[#E30613] uppercase tracking-widest font-bold">
-                  Restore Democracy
-                </span>
-              </div>
-            </div>
-            <p className="text-sm text-neutral-300 leading-relaxed font-sans max-w-md pt-2">
+        
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-12 border-b border-neutral-800">
+          
+          {/* Brand Col */}
+          <div className="lg:col-span-5 space-y-4">
+            <BrandLogo variant="compact" className="text-white brightness-150" />
+            
+            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-md pt-2">
               {SITE_METADATA.subheading}
             </p>
-            <div className="p-4 bg-neutral-900 border-l-2 border-[#E30613] text-xs text-neutral-300 space-y-2">
+
+            <div className="p-4 bg-neutral-900 border-l-2 border-[#E30613] text-xs text-neutral-300 space-y-2 max-w-md">
               <p className="font-bold text-white uppercase tracking-wider flex items-center gap-2">
                 <Shield className="w-4 h-4 text-[#E30613]" aria-hidden="true" />
-                Phase One Operating Boundary
+                <span>Phase One Operating Boundary</span>
               </p>
               <p>
-                Independent and non-party-affiliated, critical of APC governance. We do not endorse opposition candidates, organise protests in Nigeria, or collect money.
+                Independent and non-party-affiliated, explicitly critical of APC governance. We do not endorse opposition candidates, organise protests in Nigeria, or collect money.
               </p>
             </div>
           </div>
 
-          {/* Civic Path (Paced) */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[#E30613] font-sans">
-              Civic Journey
+          {/* Navigation: 4 Steps in Total */}
+          <div className="lg:col-span-3 space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#E30613]">
+              The 4 Civic Steps
             </h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm">
+              <li>
+                <button
+                  onClick={() => onNavigate('home')}
+                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer flex items-center gap-2"
+                >
+                  <span className="font-mono text-[10px] text-neutral-500">01</span>
+                  <span>Home: What We Are Doing</span>
+                </button>
+              </li>
               <li>
                 <button
                   onClick={() => onNavigate('manifesto')}
-                  className="text-white font-bold hover:underline cursor-pointer flex items-center gap-1.5"
+                  className="text-white font-bold hover:underline cursor-pointer flex items-center gap-2"
                 >
-                  <Download className="w-3.5 h-3.5 text-[#E30613]" />
+                  <span className="font-mono text-[10px] text-[#E30613]">02</span>
                   <span>The Manifesto (Download)</span>
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('issues')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  The Issues &amp; Concerns
-                </button>
-              </li>
-              <li>
-                <button
                   onClick={() => onNavigate('democracy')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
+                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer flex items-center gap-2"
                 >
-                  Democracy 101 Guide
+                  <span className="font-mono text-[10px] text-neutral-500">03</span>
+                  <span>Democracy 101 Guide</span>
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => onNavigate('action')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
+                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer flex items-center gap-2"
                 >
-                  Take Peaceful Action
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('evidence')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Verified Evidence Library
+                  <span className="font-mono text-[10px] text-neutral-500">04</span>
+                  <span>Take Action (MP Letters &amp; Social)</span>
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Action Tools & Inquiries */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-400 font-sans">
-              Tools &amp; Inquiries
+          {/* Social Channels: @anyonebutapc for all */}
+          <div className="lg:col-span-4 space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#E30613]">
+              Official Social Channels
             </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <button
-                  onClick={() => onNavigate('write')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Civic Letter Templates
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('updates')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Supporter Updates (Opt-In)
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('party-contact')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Party Leadership Desk
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Contact &amp; Media Desks
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('checklist')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Launch Checklist
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Standards & Legal */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-400 font-sans">
-              Standards &amp; Privacy
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <button
-                  onClick={() => onNavigate('about')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  About Our Charter
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('editorial')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  Editorial &amp; Corrections
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('privacy')}
-                  className="text-neutral-300 hover:text-white hover:underline cursor-pointer"
-                >
-                  UK GDPR &amp; NDPA Privacy
-                </button>
-              </li>
-              <li>
+            <p className="text-xs text-neutral-400">
+              Follow and tag <strong className="text-white font-mono">@anyonebutapc</strong> across all platforms.
+            </p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              {SOCIAL_CHANNELS.map((ch) => (
                 <a
-                  href="https://nigerialaw.today/constitution-1999/"
+                  key={ch.name}
+                  href={ch.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-neutral-400 hover:text-white"
+                  className="p-2.5 bg-neutral-900 border border-neutral-800 hover:border-[#E30613] text-neutral-300 hover:text-white flex items-center justify-between"
                 >
-                  <span>1999 Constitution (External)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  <div>
+                    <span className="font-bold block text-white">{ch.name}</span>
+                    <span className="text-[10px] text-[#E30613] font-mono">{ch.handle}</span>
+                  </div>
+                  <ExternalLink className="w-3 h-3 text-neutral-500" />
                 </a>
-              </li>
-            </ul>
+              ))}
+            </div>
+
+            <div className="pt-2 text-xs text-neutral-400">
+              Campaign hashtag: <strong className="text-white font-mono">{SITE_METADATA.campaignHashtag}</strong>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Disclosures & Copyright */}
+        <div className="pt-8 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs text-neutral-400">
+          <div>
+            &copy; {SITE_METADATA.copyrightYear} ANYONE BUT APC Civic Advocacy Initiative. All rights reserved.
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={() => onNavigate('privacy')}
+              className="hover:text-white underline cursor-pointer"
+            >
+              Privacy Policy &amp; GDPR
+            </button>
+            <button
+              onClick={() => onNavigate('editorial')}
+              className="hover:text-white underline cursor-pointer"
+            >
+              Editorial &amp; Corrections Policy
+            </button>
+            <span className="text-neutral-600">|</span>
+            <span className="text-neutral-500">Contact: {SITE_METADATA.contactEmail}</span>
           </div>
         </div>
 
-        {/* Security & Architecture Badges */}
-        <div className="py-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-neutral-400 border-b border-neutral-800">
-          <div className="flex items-start gap-3">
-            <Lock className="w-5 h-5 text-[#E30613] shrink-0 mt-0.5" aria-hidden="true" />
-            <div>
-              <strong className="text-neutral-200 block font-semibold">Privacy By Design</strong>
-              <span>No supporter data is written to browser localStorage, cookies, or public repositories.</span>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FileCheck className="w-5 h-5 text-[#E30613] shrink-0 mt-0.5" aria-hidden="true" />
-            <div>
-              <strong className="text-neutral-200 block font-semibold">Immutable Research Standards</strong>
-              <span>Every factual claim includes primary source links, status codes, and public correction logs.</span>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <Shield className="w-5 h-5 text-[#E30613] shrink-0 mt-0.5" aria-hidden="true" />
-            <div>
-              <strong className="text-neutral-200 block font-semibold">Static Edge Architecture</strong>
-              <span>Targeted for high-availability Cloudflare Pages static edge hosting with zero database exposure.</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
-          <p>© {SITE_METADATA.copyrightYear} {SITE_METADATA.name}. Independent Civic Advocacy Initiative. All rights reserved.</p>
-          <p className="text-center sm:text-right">
-            Built with strict adherence to WCAG 2.2 AA accessibility standards and UK English copy.
-          </p>
-        </div>
       </div>
     </footer>
   );

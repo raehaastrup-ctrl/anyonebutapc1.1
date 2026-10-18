@@ -94,10 +94,10 @@ export const EditorialPolicyPage: React.FC<EditorialPolicyPageProps> = ({ onNavi
 
         <div className="pt-4 flex items-center justify-between border-t border-black/10">
           <button
-            onClick={() => onNavigate('evidence')}
+            onClick={() => onNavigate('manifesto')}
             className="tap-target px-5 py-2.5 bg-[#080808] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-[#252525] cursor-pointer"
           >
-            <span>Review Public Correction Log</span>
+            <span>Read The Manifesto</span>
             <ArrowRight className="w-4 h-4 text-[#E30613]" />
           </button>
         </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrandLogo } from './BrandLogo';
 import { PageId } from '../types';
-import { Menu, X, ArrowRight, Download, ShieldAlert, Sparkles } from 'lucide-react';
+import { Menu, X, Download, ArrowRight, Share2 } from 'lucide-react';
+import { SITE_METADATA } from '../data/content';
 
 interface HeaderProps {
   currentPage: PageId;
@@ -11,16 +12,10 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const close = (e: KeyboardEvent) => { if (e.key === 'Escape') { setMobileMenuOpen(false); document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus(); } };
-    window.addEventListener('keydown', close);
-    return () => { window.removeEventListener('keydown', close); document.body.style.overflow = ''; };
-  }, []);
-
   // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1280) {
+      if (window.innerWidth >= 1024) {
         setMobileMenuOpen(false);
       }
     };
@@ -28,33 +23,21 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Prevent scroll when mobile menu is open
+  // Prevent background scroll when mobile drawer is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
-    for (const node of document.querySelectorAll<HTMLElement>('main, footer')) node.inert = mobileMenuOpen;
-    return () => { for (const node of document.querySelectorAll<HTMLElement>('main, footer')) node.inert = false; };
   }, [mobileMenuOpen]);
 
-  // Paced, beginner-friendly primary navigation
-  const primaryNavItems: { id: PageId; label: string; badge?: string }[] = [
-    { id: 'manifesto', label: 'The Manifesto', badge: 'Start Here' },
-    { id: 'issues', label: 'The Issues' },
-    { id: 'democracy', label: 'Democracy 101' },
-    { id: 'action', label: 'Take Action' },
-    { id: 'evidence', label: 'Evidence Library' },
-  ];
-
-  // Secondary sub-items accessible in mobile drawer or footer
-  const secondaryNavItems: { id: PageId; label: string }[] = [
-    { id: 'about', label: 'About Our Charter' },
-    { id: 'write', label: 'Civic Letters' },
-    { id: 'updates', label: 'Supporter Updates' },
-    { id: 'party-contact', label: 'Party Leadership Desk' },
-    { id: 'contact', label: 'Contact Desks' },
+  // Exactly 4 paced steps in total
+  const navItems: { id: PageId; label: string; stepNumber: string }[] = [
+    { id: 'home', label: 'Home', stepNumber: '1' },
+    { id: 'manifesto', label: 'The Manifesto', stepNumber: '2' },
+    { id: 'democracy', label: 'Democracy 101', stepNumber: '3' },
+    { id: 'action', label: 'Take Action', stepNumber: '4' },
   ];
 
   const handleNavClick = (page: PageId) => {
@@ -65,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-black/10 shadow-xs">
-      {/* Skip to Main Content Link */}
+      {/* Accessibility Skip Link */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#E30613] focus:text-white focus:font-bold focus:shadow-lg"
@@ -73,163 +56,157 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
         Skip to main content
       </a>
 
-      {/* Paced Civic Banner */}
-      <div className="bg-[#080808] text-white px-4 py-1.5 text-xs font-semibold tracking-wide">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      {/* Top Bar with Campaign Hashtag & Quick Action */}
+      <div className="bg-[#080808] text-white px-4 py-1.5 text-xs">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-[#E30613] animate-pulse" aria-hidden="true" />
-            <span className="uppercase text-[11px] font-bold text-neutral-300">Phase One Civic Movement</span>
-            <span className="hidden sm:inline text-neutral-500">|</span>
-            <span className="text-neutral-200 hidden sm:inline text-[11px]">
-              Step-by-step civic resources for democratic accountability. Zero protests organised in Nigeria.
+            <span className="w-2 h-2 rounded-full bg-[#E30613] animate-pulse" aria-hidden="true" />
+            <span className="font-bold tracking-wider uppercase text-neutral-300 text-[11px]">
+              Independent Civic Initiative
+            </span>
+            <span className="text-neutral-500 hidden sm:inline">|</span>
+            <span className="text-neutral-300 hidden sm:inline text-[11px] font-mono">
+              {SITE_METADATA.campaignHashtag}
             </span>
           </div>
-          <button
-            onClick={() => handleNavClick('manifesto')}
-            className="text-[11px] text-[#E30613] hover:text-white underline font-bold cursor-pointer flex items-center gap-1"
-          >
-            <span>Read &amp; Download The 2026 Manifesto</span>
-            <ArrowRight className="w-3 h-3" />
-          </button>
+          <div className="flex items-center gap-3 text-[11px]">
+            <span className="text-neutral-400 hidden md:inline">Follow @anyonebutapc on TikTok, IG, X &amp; FB</span>
+            <button
+              onClick={() => handleNavClick('manifesto')}
+              className="text-[#E30613] hover:text-white font-bold underline cursor-pointer flex items-center gap-1"
+            >
+              <Download className="w-3 h-3" />
+              <span>Download Manifesto</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Main Header Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
+      {/* Main Navigation Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo Brand Anchor with Approved Circular Badge */}
+          {/* Approved Brand Logo */}
           <button
             onClick={() => handleNavClick('home')}
-            className="flex items-center gap-3 text-left focus-visible:outline-2 focus-visible:outline-[#E30613] p-1 -ml-1 cursor-pointer group"
-            aria-label="ANYONE BUT APC - Return to Homepage"
+            className="flex items-center text-left focus-visible:outline-2 focus-visible:outline-[#E30613] p-1 -ml-1 cursor-pointer"
+            aria-label="ANYONE BUT APC - Return to Home"
           >
-            <BrandLogo variant="compact-nav" showTagline={false} />
+            <BrandLogo variant="compact" />
           </button>
 
-          {/* Calm, Paced-Out Primary Navigation */}
-          <nav className="hidden xl:flex items-center space-x-1" aria-label="Main Navigation">
-            {primaryNavItems.map((item) => {
+          {/* Desktop 4-Step Navigation */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Main navigation">
+            {navItems.map((item) => {
               const isActive = currentPage === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`tap-target px-3.5 py-2 text-sm font-bold tracking-tight uppercase transition-colors cursor-pointer border-b-2 relative ${
+                  className={`tap-target px-4 py-2 text-xs xl:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 border-b-2 ${
                     isActive
-                      ? 'border-[#E30613] text-[#080808]'
-                      : 'border-transparent text-[#252525] hover:text-[#E30613] hover:border-black/20'
+                      ? 'border-[#E30613] text-[#080808] bg-neutral-100'
+                      : 'border-transparent text-neutral-600 hover:text-[#080808] hover:bg-neutral-50'
                   }`}
                 >
-                  <span className="flex items-center gap-1.5">
-                    <span>{item.label}</span>
-                    {item.badge && (
-                      <span className="text-[9px] bg-[#E30613] text-white px-1.5 py-0.2 font-sans font-bold uppercase rounded-xs">
-                        {item.badge}
-                      </span>
-                    )}
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-sm font-mono ${isActive ? 'bg-[#E30613] text-white' : 'bg-neutral-200 text-neutral-700'}`}>
+                    0{item.stepNumber}
                   </span>
+                  <span>{item.label}</span>
                 </button>
               );
             })}
           </nav>
 
-          {/* Quick Action CTA & Mobile Menu Toggle */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Desktop Quick CTA */}
+          <div className="hidden lg:flex items-center gap-3">
             <button
-              onClick={() => handleNavClick('updates')}
-              className="tap-target px-4 py-2 bg-[#E30613] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-red-700 transition-colors shadow-xs cursor-pointer"
+              onClick={() => handleNavClick('action')}
+              className="tap-target px-4 py-2.5 bg-[#E30613] text-white text-xs font-bold uppercase tracking-wider hover:bg-red-700 transition-colors shadow-xs cursor-pointer flex items-center gap-2"
             >
-              <Download className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Get Involved</span>
+              <span>Take Action</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
+          </div>
 
-            {/* Mobile Menu Button */}
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden flex items-center gap-2">
+            <button
+              onClick={() => handleNavClick('manifesto')}
+              className="p-2 bg-neutral-100 text-[#080808] border border-black/10 text-xs font-bold uppercase flex items-center gap-1"
+              aria-label="Download Manifesto"
+            >
+              <Download className="w-4 h-4 text-[#E30613]" />
+              <span className="hidden xs:inline">Manifesto</span>
+            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden tap-target p-2 text-[#080808] hover:text-[#E30613] focus:outline-none focus:ring-2 focus:ring-[#E30613] cursor-pointer"
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="tap-target p-2 text-[#080808] hover:bg-neutral-100 border border-black/10 focus-visible:outline-2 focus-visible:outline-[#E30613] cursor-pointer"
               aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-navigation"
+              aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Paced Mobile Navigation Drawer */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div
-          id="mobile-navigation"
-          className="xl:hidden fixed inset-x-0 top-[160px] bottom-0 bg-white border-t border-black/10 z-40 overflow-y-auto p-6 flex flex-col justify-between"
-          aria-label="Paced Site Menu"
-        >
+        <div className="lg:hidden fixed inset-0 top-[110px] z-50 bg-white border-t border-black/10 flex flex-col justify-between overflow-y-auto p-6 animate-fadeIn">
           <div className="space-y-6">
-            <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-[#E30613] mb-3">
-                Guided Civic Journey (Paced Out)
-              </p>
-              <div className="space-y-1">
-                {primaryNavItems.map((item, idx) => {
-                  const isActive = currentPage === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => handleNavClick(item.id)}
-                      aria-current={isActive ? 'page' : undefined}
-                      className={`w-full text-left tap-target px-4 py-3 text-base font-bold uppercase tracking-tight flex items-center justify-between border-b border-black/5 ${
-                        isActive
-                          ? 'bg-neutral-100 text-[#E30613] border-l-4 border-l-[#E30613]'
-                          : 'text-[#080808] hover:bg-neutral-50'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="w-5 h-5 rounded-full bg-neutral-200 text-neutral-800 flex items-center justify-center text-xs font-mono font-bold">
-                          {idx + 1}
-                        </span>
-                        <span>{item.label}</span>
-                      </div>
-                      {item.badge ? (
-                        <span className="text-[10px] bg-[#E30613] text-white px-2 py-0.5 font-bold uppercase">
-                          {item.badge}
-                        </span>
-                      ) : isActive ? (
-                        <span className="text-xs font-bold text-[#E30613]">Active</span>
-                      ) : null}
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="border-b border-black/10 pb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#E30613]">
+                The 4 Civic Steps
+              </span>
             </div>
 
-            <div className="pt-2 border-t border-black/10">
-              <p className="text-xs uppercase tracking-widest font-bold text-neutral-500 mb-2">
-                More Pages &amp; Desks
-              </p>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                {secondaryNavItems.map((sec) => (
+            <nav className="flex flex-col space-y-2">
+              {navItems.map((item) => {
+                const isActive = currentPage === item.id;
+                return (
                   <button
-                    key={sec.id}
-                    onClick={() => handleNavClick(sec.id)}
-                    className="text-left p-2 hover:bg-neutral-100 text-neutral-700 font-medium"
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`tap-target text-left px-4 py-3.5 text-base font-bold uppercase tracking-tight flex items-center justify-between border-2 transition-colors cursor-pointer ${
+                      isActive
+                        ? 'border-[#E30613] bg-[#080808] text-white'
+                        : 'border-black/10 bg-neutral-50 text-[#080808] hover:bg-neutral-100'
+                    }`}
                   >
-                    {sec.label}
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs px-2 py-0.5 font-mono ${isActive ? 'bg-[#E30613] text-white' : 'bg-neutral-200 text-neutral-800'}`}>
+                        Step 0{item.stepNumber}
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+                    <ArrowRight className={`w-4 h-4 ${isActive ? 'text-[#E30613]' : 'text-neutral-400'}`} />
                   </button>
-                ))}
-              </div>
+                );
+              })}
+            </nav>
+
+            {/* Quick Action in Mobile Drawer */}
+            <div className="pt-2 space-y-3">
+              <button
+                onClick={() => handleNavClick('action')}
+                className="w-full py-3.5 bg-[#E30613] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+              >
+                <span>Write to Your MP &amp; Share Post</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
-          <div className="pt-6 border-t border-black/10 space-y-3">
-            <button
-              onClick={() => handleNavClick('manifesto')}
-              className="w-full tap-target py-3.5 bg-[#E30613] text-white text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 cursor-pointer hover:bg-red-700"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download Official Manifesto</span>
-            </button>
+          {/* Social media handles in mobile drawer */}
+          <div className="pt-6 border-t border-black/10 mt-6 space-y-2 text-xs text-neutral-600">
+            <div className="font-bold text-[#080808] uppercase tracking-wider">
+              Follow &amp; Tag {SITE_METADATA.campaignHashtag}
+            </div>
+            <p className="text-[11px] text-neutral-500">
+              Username is <strong className="text-[#080808]">@anyonebutapc</strong> on TikTok, Instagram, Facebook, and X.
+            </p>
           </div>
         </div>
       )}

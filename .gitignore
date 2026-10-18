@@ -6,12 +6,3 @@ coverage/
 *.log
 .env*
 !.env.example
-
-.env
-.env.*
-!.env.example
-.dev.vars*
-.pnpm-store/
-.wrangler/
-playwright-report/
-test-results/
