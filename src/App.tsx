@@ -40,6 +40,11 @@ export default function App() {
     return validPages.includes(hash) ? hash : 'home';
   });
 
+  useEffect(() => {
+    document.getElementById('main-content')?.focus({ preventScroll: true });
+    window.scrollTo({top: 0, behavior: 'instant'});
+  }, [currentPage]);
+
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {

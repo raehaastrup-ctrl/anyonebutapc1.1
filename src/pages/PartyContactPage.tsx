@@ -21,8 +21,7 @@ export const PartyContactPage: React.FC<PartyContactPageProps> = ({ onNavigate }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.consent) return;
-    setStatus('submitted_notice');
+    // Collection remains disabled until this separate intake backend is reviewed.
   };
 
   return (
@@ -108,6 +107,8 @@ export const PartyContactPage: React.FC<PartyContactPageProps> = ({ onNavigate }
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+<p role="status" className="p-4 border-2">This form is currently unavailable. No information is being collected or sent.</p>
+<fieldset disabled className="contents">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#080808] mb-1">
@@ -223,7 +224,8 @@ export const PartyContactPage: React.FC<PartyContactPageProps> = ({ onNavigate }
                 <ArrowRight className="w-4 h-4 text-[#E30613]" />
               </button>
             </div>
-          </form>
+          </fieldset>
+</form>
         )}
       </div>
     </div>

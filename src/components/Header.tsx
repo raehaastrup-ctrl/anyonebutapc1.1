@@ -11,10 +11,16 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => { if (e.key === 'Escape') { setMobileMenuOpen(false); document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus(); } };
+    window.addEventListener('keydown', close);
+    return () => { window.removeEventListener('keydown', close); document.body.style.overflow = ''; };
+  }, []);
+
   // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1280) {
         setMobileMenuOpen(false);
       }
     };
@@ -29,6 +35,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     } else {
       document.body.style.overflow = '';
     }
+    for (const node of document.querySelectorAll<HTMLElement>('main, footer')) node.inert = mobileMenuOpen;
+    return () => { for (const node of document.querySelectorAll<HTMLElement>('main, footer')) node.inert = false; };
   }, [mobileMenuOpen]);
 
   // Paced, beginner-friendly primary navigation
@@ -87,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
       </div>
 
       {/* Main Header Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo Brand Anchor with Approved Circular Badge */}
           <button
@@ -99,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           </button>
 
           {/* Calm, Paced-Out Primary Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
+          <nav className="hidden xl:flex items-center space-x-1" aria-label="Main Navigation">
             {primaryNavItems.map((item) => {
               const isActive = currentPage === item.id;
               return (
@@ -129,19 +137,18 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           {/* Quick Action CTA & Mobile Menu Toggle */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => handleNavClick('manifesto')}
+              onClick={() => handleNavClick('updates')}
               className="tap-target px-4 py-2 bg-[#E30613] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-red-700 transition-colors shadow-xs cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" aria-hidden="true" />
-              <span className="hidden sm:inline">Download Manifesto</span>
-              <span className="sm:hidden">Manifesto</span>
+              <span>Get Involved</span>
             </button>
 
             {/* Mobile Menu Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden tap-target p-2 text-[#080808] hover:text-[#E30613] focus:outline-none focus:ring-2 focus:ring-[#E30613] cursor-pointer"
+              className="xl:hidden tap-target p-2 text-[#080808] hover:text-[#E30613] focus:outline-none focus:ring-2 focus:ring-[#E30613] cursor-pointer"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation"
@@ -156,9 +163,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
       {mobileMenuOpen && (
         <div
           id="mobile-navigation"
-          className="lg:hidden fixed inset-x-0 top-[110px] bottom-0 bg-white border-t border-black/10 z-40 overflow-y-auto p-6 flex flex-col justify-between"
-          role="dialog"
-          aria-modal="true"
+          className="xl:hidden fixed inset-x-0 top-[160px] bottom-0 bg-white border-t border-black/10 z-40 overflow-y-auto p-6 flex flex-col justify-between"
           aria-label="Paced Site Menu"
         >
           <div className="space-y-6">
