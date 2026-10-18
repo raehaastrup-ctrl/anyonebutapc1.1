@@ -44,3 +44,12 @@
     scroll-behavior: auto !important;
   }
 }
+
+@layer base {
+  html { overflow-wrap: anywhere; }
+  main, main * { min-width: 0; }
+  img, video, svg { max-width: 100%; }
+  input:not([type=checkbox]), textarea, select { max-width: 100%; }
+  button, a { touch-action: manipulation; }
+  table { display: block; max-width: 100%; overflow-x: auto; }
+}

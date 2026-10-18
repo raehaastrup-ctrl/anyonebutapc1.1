@@ -19,7 +19,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('submitted');
+    // Collection remains disabled until this separate intake backend is reviewed.
   };
 
   return (
@@ -122,6 +122,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+<p role="status" className="p-4 border-2">This form is currently unavailable. No information is being collected or sent.</p>
+<fieldset disabled className="contents">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-[#080808] mb-1">
                 Select Destination Desk
@@ -208,7 +210,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="p-3 bg-neutral-50 border border-black/10 text-xs text-neutral-600 flex items-center justify-between">
-              <span>Security: Rate-limited, protected against spam, and transmitted over TLS.</span>
+              <span>Form unavailable until security testing is complete.</span>
               <button
                 type="button"
                 onClick={() => onNavigate('privacy')}
@@ -224,7 +226,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             >
               Send Message
             </button>
-          </form>
+          </fieldset>
+</form>
         )}
       </div>
     </div>

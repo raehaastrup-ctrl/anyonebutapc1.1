@@ -29,8 +29,7 @@ export const CorrectionModal: React.FC<CorrectionModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate editorial queue processing (no client data leaks)
-    setSubmitted(true);
+    // Collection remains disabled until this separate intake backend is reviewed.
   };
 
   const handleReset = () => {
@@ -95,6 +94,8 @@ export const CorrectionModal: React.FC<CorrectionModalProps> = ({
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+<p role="status" className="p-4 border-2">This form is currently unavailable. No information is being collected or sent.</p>
+<fieldset disabled className="contents">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#080808] mb-1">
                   Target Entry / Subject
@@ -213,7 +214,8 @@ export const CorrectionModal: React.FC<CorrectionModalProps> = ({
                   <span>Transmit to Editorial Desk</span>
                 </button>
               </div>
-            </form>
+            </fieldset>
+</form>
           </div>
         )}
       </div>
